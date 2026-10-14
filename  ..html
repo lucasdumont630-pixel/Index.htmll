@@ -1,0 +1,1107 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Vapers Altea</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Light design — white & blue, Mediterranean Altea vibe */
+:root {
+  --bg: #ffffff;
+  --bg-raised: #f5f7fb;
+  --bg-card: #f0f4f9;
+  --bg-card-hover: #e6ecf4;
+  --fg: #1a2133;
+  --fg-muted: #5c6478;
+  --fg-dim: #8b92a3;
+  --accent: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.08);
+  --accent-hover: #1d4fd8;
+  --green: #16a34a;
+  --red: #dc2626;
+  --border: rgba(0,0,0,0.07);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  padding-inline: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+
+button { font-family: var(--font-body); cursor: pointer; border: none; background: none; color: var(--fg); }
+input { font-family: var(--font-body); }
+
+/* ========== AGE GATE ========== */
+.age-gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 24px; text-align: center;
+  padding: 24px;
+}
+.age-gate.hidden { display: none; }
+.age-gate-logo {
+  font-family: var(--font-display); font-size: 32px; font-weight: 700;
+  color: var(--accent);
+}
+.age-gate p { color: var(--fg-muted); max-width: 320px; font-size: 14px; line-height: 1.5; }
+.age-gate-buttons { display: flex; gap: 12px; }
+.age-gate-buttons button {
+  padding: 14px 36px; border-radius: var(--radius); font-weight: 600; font-size: 16px;
+  transition: all 0.2s;
+}
+.age-gate-buttons .btn-yes {
+  background: var(--accent); color: var(--bg);
+}
+.age-gate-buttons .btn-yes:hover { background: var(--accent-hover); }
+.age-gate-buttons .btn-no {
+  background: var(--bg-card); color: var(--fg-muted);
+  border: 1px solid var(--border);
+}
+.age-gate-denied {
+  color: var(--red); font-size: 14px; font-weight: 500; display: none;
+}
+
+/* ========== MAIN SITE (hidden until verified) ========== */
+.site { display: none; }
+.site.visible { display: block; }
+
+/* ========== HEADER ========== */
+header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 12px 0;
+  margin-inline: -16px;
+  padding-inline: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 960px; margin: auto;
+}
+.logo {
+  font-family: var(--font-display); font-weight: 700; font-size: 20px;
+  color: var(--fg); display: flex; align-items: center; gap: 8px;
+}
+.logo span { color: var(--accent); }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.btn-wa {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #25D366; color: #fff; padding: 8px 14px;
+  border-radius: var(--radius-sm); font-size: 13px; font-weight: 600;
+  transition: background 0.2s;
+}
+.btn-wa:hover { background: #1fb855; color: #fff; }
+.btn-wa svg { width: 18px; height: 18px; }
+
+.nav-toggle {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 8px; cursor: pointer;
+}
+.nav-toggle span {
+  width: 20px; height: 2px; background: var(--fg-muted); border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* Mobile nav */
+.mobile-nav {
+  position: fixed; inset: 0; z-index: 99;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.mobile-nav.open { opacity: 1; pointer-events: all; }
+.mobile-nav a {
+  font-family: var(--font-display); font-size: 24px; font-weight: 600;
+  color: var(--fg); transition: color 0.2s;
+}
+.mobile-nav a:hover { color: var(--accent); }
+.mobile-nav a:hover { color: var(--accent); }
+.nav-close {
+  position: absolute; top: 20px; right: 20px;
+  font-size: 28px; color: var(--fg-muted); cursor: pointer;
+  background: none; border: none;
+}
+
+/* ========== HERO ========== */
+.hero {
+  max-width: 960px; margin: 0 auto;
+  padding: 48px 0 40px;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--accent-soft); color: var(--accent);
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.hero h1 {
+  font-size: clamp(28px, 6vw, 48px); line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero h1 em {
+  font-style: normal; color: var(--accent);
+  position: relative;
+}
+.hero p {
+  color: var(--fg-muted); font-size: 16px; max-width: 480px; margin: 0 auto 28px;
+}
+.hero-cta {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: var(--bg); padding: 14px 28px;
+  border-radius: var(--radius); font-weight: 600; font-size: 15px;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: var(--accent-hover); color: var(--bg); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--bg-card); color: var(--fg); padding: 14px 28px;
+  border-radius: var(--radius); font-weight: 600; font-size: 15px;
+  border: 1px solid var(--border); transition: all 0.2s;
+}
+.btn-secondary:hover { background: var(--bg-card-hover); color: var(--fg); }
+
+/* Social links row */
+.socials {
+  display: flex; gap: 12px; justify-content: center; margin-top: 24px;
+}
+.social-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 8px 16px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 500; color: var(--fg-muted);
+  transition: all 0.2s;
+}
+.social-link:hover { border-color: var(--accent); color: var(--accent); }
+.social-link svg { width: 18px; height: 18px; }
+
+/* ========== SECTION TITLES ========== */
+.section-header {
+  text-align: center; margin-bottom: 28px;
+}
+.section-header h2 {
+  font-size: clamp(22px, 4vw, 32px); margin-bottom: 8px;
+}
+.section-header p {
+  color: var(--fg-muted); font-size: 14px; max-width: 440px; margin: 0 auto;
+}
+
+/* ========== PRODUCTS ========== */
+#productos { max-width: 960px; margin: 0 auto; padding: 40px 0; }
+
+.product-controls {
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+  margin-bottom: 24px;
+}
+.search-box {
+  flex: 1; min-width: 180px; position: relative;
+}
+.search-box input {
+  width: 100%; padding: 10px 14px 10px 38px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--fg); font-size: 14px;
+  outline: none; transition: border-color 0.2s;
+}
+.search-box input::placeholder { color: var(--fg-dim); }
+.search-box input:focus { border-color: var(--accent); }
+.search-box svg {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px; color: var(--fg-dim);
+}
+
+.filter-tabs {
+  display: flex; gap: 6px; overflow-x: auto;
+  scrollbar-width: none; padding-bottom: 2px;
+}
+.filter-tabs::-webkit-scrollbar { display: none; }
+.filter-tab {
+  padding: 8px 16px; border-radius: 100px;
+  font-size: 13px; font-weight: 500;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--fg-muted); white-space: nowrap;
+  transition: all 0.2s; cursor: pointer;
+}
+.filter-tab:hover { border-color: var(--fg-dim); color: var(--fg); }
+.filter-tab.active {
+  background: var(--accent); color: var(--bg);
+  border-color: var(--accent);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.product-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  transition: all 0.25s; cursor: pointer; position: relative;
+}
+.product-card:hover {
+  border-color: rgba(37,99,235,0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37,99,235,0.1);
+}
+.product-img {
+  aspect-ratio: 4/3; background: var(--bg-raised);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px; position: relative;
+}
+.product-badge {
+  position: absolute; top: 10px; left: 10px;
+  padding: 4px 10px; border-radius: 100px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.badge-new { background: var(--accent); color: var(--bg); }
+.badge-sale { background: var(--red); color: #fff; }
+.badge-popular { background: var(--green); color: #fff; }
+.product-fav {
+  position: absolute; top: 10px; right: 10px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.8); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; color: var(--fg-muted);
+}
+.product-fav:hover, .product-fav.liked { color: var(--red); }
+.product-fav svg { width: 16px; height: 16px; }
+
+.product-info { padding: 14px; }
+.product-category {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--accent); font-weight: 600; margin-bottom: 4px;
+}
+.product-name {
+  font-family: var(--font-display); font-weight: 600; font-size: 15px;
+  margin-bottom: 4px;
+}
+.product-desc {
+  font-size: 13px; color: var(--fg-muted); margin-bottom: 10px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.product-footer {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.product-price {
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
+  color: var(--accent);
+}
+.product-price .old-price {
+  font-size: 13px; color: var(--fg-dim); text-decoration: line-through;
+  font-weight: 400; margin-left: 6px;
+}
+.product-add {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent); color: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; transition: all 0.2s;
+  border: none; cursor: pointer;
+}
+.product-add:hover { background: var(--accent-hover); transform: scale(1.1); }
+
+.no-results {
+  text-align: center; padding: 48px 20px; color: var(--fg-muted);
+  display: none;
+}
+.no-results.visible { display: block; }
+
+/* ========== PRODUCT MODAL ========== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.75);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--bg-raised); border-radius: 20px 20px 0 0;
+  width: 100%; max-width: 500px; max-height: 85vh;
+  overflow-y: auto; padding: 24px;
+  transform: translateY(100%); transition: transform 0.35s ease;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-overlay { background: rgba(0,0,0,0.4); }
+.modal-handle {
+  width: 36px; height: 4px; border-radius: 2px;
+  background: var(--fg-dim); margin: 0 auto 20px;
+}
+.modal-img {
+  aspect-ratio: 16/9; background: var(--bg-card); border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 64px; margin-bottom: 20px;
+}
+.modal h3 {
+  font-size: 22px; margin-bottom: 4px;
+}
+.modal .modal-cat {
+  font-size: 12px; color: var(--accent); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600; margin-bottom: 12px;
+}
+.modal .modal-desc {
+  color: var(--fg-muted); font-size: 14px; line-height: 1.6; margin-bottom: 20px;
+}
+.modal .modal-price {
+  font-family: var(--font-display); font-size: 28px; font-weight: 700;
+  color: var(--accent); margin-bottom: 20px;
+}
+.modal .modal-action {
+  width: 100%; padding: 16px;
+  background: #25D366; color: #fff; border-radius: var(--radius);
+  font-weight: 600; font-size: 16px; display: flex;
+  align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.2s;
+}
+.modal .modal-action:hover { background: #1fb855; }
+
+/* ========== REVIEWS ========== */
+#opiniones { max-width: 960px; margin: 0 auto; padding: 40px 0; }
+
+.rating-summary {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  margin-bottom: 28px; flex-wrap: wrap;
+}
+.rating-big {
+  font-family: var(--font-display); font-size: 56px; font-weight: 700;
+  color: var(--accent); line-height: 1;
+}
+.rating-meta { text-align: left; }
+.stars { color: var(--accent); font-size: 20px; letter-spacing: 2px; }
+.rating-count { font-size: 13px; color: var(--fg-muted); margin-top: 2px; }
+.rating-source {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; color: var(--fg-dim); margin-top: 4px;
+}
+
+.reviews-scroll {
+  display: flex; gap: 14px; overflow-x: auto;
+  scroll-snap-type: x mandatory; padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.reviews-scroll::-webkit-scrollbar { display: none; }
+
+.review-card {
+  flex: 0 0 280px; scroll-snap-align: start;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px;
+}
+.review-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.review-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 14px;
+}
+.review-name { font-weight: 600; font-size: 14px; }
+.review-date { font-size: 11px; color: var(--fg-dim); }
+.review-stars { color: var(--accent); font-size: 13px; margin-bottom: 8px; letter-spacing: 1px; }
+.review-text { font-size: 13px; color: var(--fg-muted); line-height: 1.5; }
+
+/* ========== FAQ ========== */
+#faq { max-width: 960px; margin: 0 auto; padding: 40px 0; }
+.faq-list { display: flex; flex-direction: column; gap: 8px; }
+.faq-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); overflow: hidden;
+}
+.faq-question {
+  width: 100%; text-align: left; padding: 16px 18px;
+  font-family: var(--font-display); font-weight: 600; font-size: 15px;
+  display: flex; justify-content: space-between; align-items: center;
+  color: var(--fg); transition: color 0.2s; cursor: pointer;
+  background: none; border: none;
+}
+.faq-question:hover { color: var(--accent); }
+.faq-icon {
+  font-size: 18px; color: var(--fg-dim); transition: transform 0.3s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); color: var(--accent); }
+.faq-answer {
+  max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
+}
+.faq-answer-inner {
+  padding: 0 18px 16px;
+  font-size: 14px; color: var(--fg-muted); line-height: 1.6;
+}
+
+/* ========== HORARIO & MAPA ========== */
+#contacto { max-width: 960px; margin: 0 auto; padding: 40px 0; }
+.contact-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 600px) {
+  .contact-grid { grid-template-columns: 1fr 1fr; }
+}
+.info-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px;
+}
+.info-card h3 {
+  font-size: 18px; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.schedule-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.schedule-row:last-child { border-bottom: none; }
+.schedule-day { font-weight: 500; }
+.schedule-time { color: var(--fg-muted); }
+.schedule-closed { color: var(--red); font-weight: 500; }
+.open-now {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 100px;
+  background: rgba(58, 184, 106, 0.12); color: var(--green);
+  font-size: 12px; font-weight: 600; margin-bottom: 16px;
+}
+.open-now .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.address-line {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; color: var(--fg-muted); margin-bottom: 12px;
+}
+.address-line svg { flex-shrink: 0; width: 18px; height: 18px; color: var(--accent); margin-top: 2px; }
+
+.map-container {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  aspect-ratio: 16/9; position: relative;
+}
+.map-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-raised));
+}
+.map-placeholder svg { width: 40px; height: 40px; color: var(--accent); }
+.map-placeholder span { font-size: 13px; color: var(--fg-muted); }
+.map-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; background: var(--accent); color: var(--bg);
+  border-radius: var(--radius-sm); font-weight: 600; font-size: 13px;
+  transition: background 0.2s;
+}
+.map-link:hover { background: var(--accent-hover); color: var(--bg); }
+
+/* ========== NEWSLETTER ========== */
+.newsletter {
+  max-width: 960px; margin: 0 auto; padding: 40px 0;
+}
+.newsletter-card {
+  background: linear-gradient(135deg, var(--bg-card), rgba(37,99,235,0.06));
+  border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 32px 24px;
+  text-align: center;
+}
+.newsletter-card h2 {
+  font-size: 22px; margin-bottom: 8px;
+}
+.newsletter-card p {
+  color: var(--fg-muted); font-size: 14px; margin-bottom: 20px;
+  max-width: 400px; margin-inline: auto;
+}
+.newsletter-form {
+  display: flex; gap: 8px; max-width: 400px; margin: 0 auto;
+}
+.newsletter-form input {
+  flex: 1; padding: 12px 16px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--fg); font-size: 14px; outline: none;
+  min-width: 0;
+}
+.newsletter-form input:focus { border-color: var(--accent); }
+.newsletter-form button {
+  padding: 12px 20px; background: var(--accent); color: var(--bg);
+  border-radius: var(--radius-sm); font-weight: 600; font-size: 14px;
+  white-space: nowrap; transition: background 0.2s;
+}
+.newsletter-form button:hover { background: var(--accent-hover); }
+.newsletter-ok {
+  color: var(--green); font-size: 14px; font-weight: 500;
+  margin-top: 12px; display: none;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  max-width: 960px; margin: 0 auto; padding: 32px 0;
+  border-top: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 16px;
+  text-align: center; font-size: 13px; color: var(--fg-dim);
+}
+.footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+.footer-links a { color: var(--fg-muted); font-size: 13px; }
+.footer-links a:hover { color: var(--accent); }
+.footer-legal { font-size: 11px; line-height: 1.5; max-width: 500px; margin: 0 auto; }
+
+/* ========== BACK TO TOP ========== */
+.back-top {
+  position: fixed; bottom: 24px; right: 16px; z-index: 90;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+  opacity: 0; pointer-events: none; transition: all 0.3s;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+.back-top.visible { opacity: 1; pointer-events: all; }
+.back-top:hover { transform: translateY(-2px); }
+.back-top svg { width: 20px; height: 20px; }
+
+/* ========== TOAST ========== */
+.toast {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--fg); color: var(--bg); border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  padding: 12px 20px; border-radius: var(--radius);
+  font-size: 14px; font-weight: 500; z-index: 300;
+  opacity: 0; pointer-events: none; transition: all 0.3s;
+  white-space: nowrap;
+  bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ========== COOKIE BANNER ========== */
+.cookie-banner {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+  background: var(--bg-raised); border-top: 1px solid var(--border);
+  padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+}
+.cookie-banner.hidden { display: none; }
+.cookie-inner {
+  max-width: 960px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.cookie-inner p { font-size: 13px; color: var(--fg-muted); flex: 1; min-width: 200px; }
+.cookie-btns { display: flex; gap: 8px; }
+.cookie-btns button {
+  padding: 8px 16px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; transition: all 0.2s;
+}
+.cookie-accept { background: var(--accent); color: var(--bg); }
+.cookie-decline { background: var(--bg-card); color: var(--fg-muted); border: 1px solid var(--border); }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 480px) {
+  .hero { padding: 32px 0 28px; }
+  .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .newsletter-form { flex-direction: column; }
+}
+</style>
+
+<!-- ===== AGE GATE ===== -->
+<div class="age-gate" id="ageGate">
+  <div class="age-gate-logo">VAPERS <span>ALTEA</span></div>
+  <h2>Verificacion de edad</h2>
+  <p>Debes ser mayor de 18 anos para acceder a este sitio web. Al entrar, confirmas que cumples con la edad legal.</p>
+  <div class="age-gate-buttons">
+    <button class="btn-yes" onclick="verifyAge(true)">Soy mayor de 18</button>
+    <button class="btn-no" onclick="verifyAge(false)">Soy menor</button>
+  </div>
+  <div class="age-gate-denied" id="ageDenied">No puedes acceder a este sitio siendo menor de edad.</div>
+</div>
+
+<!-- ===== MAIN SITE ===== -->
+<div class="site" id="mainSite">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">VAPERS <span>ALTEA</span></div>
+      <div class="header-actions">
+        <a href="https://wa.me/34600000000" target="_blank" rel="noopener" class="btn-wa">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.016a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374A9.86 9.86 0 012.15 12.01C2.15 6.557 6.587 2.12 12.05 2.12a9.84 9.84 0 016.963 2.887 9.84 9.84 0 012.887 6.963c-.003 5.453-4.44 9.89-9.9 9.89l.05-.075zm8.413-18.297A11.82 11.82 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="nav-close" onclick="toggleNav()">✕</button>
+    <a href="#productos" onclick="toggleNav()">Productos</a>
+    <a href="#opiniones" onclick="toggleNav()">Opiniones</a>
+    <a href="#faq" onclick="toggleNav()">FAQ</a>
+    <a href="#contacto" onclick="toggleNav()">Contacto</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">📍 Altea, Costa Blanca</div>
+    <h1>Tu tienda de <em>vapeo</em> de confianza en Altea</h1>
+    <p>Dispositivos, liquidos, accesorios y asesoramiento personalizado. Ven a visitarnos o contactanos por WhatsApp.</p>
+    <div class="hero-cta">
+      <a href="#productos" class="btn-primary">Ver productos</a>
+      <a href="#contacto" class="btn-secondary">Como llegar</a>
+    </div>
+    <div class="socials">
+      <a href="https://instagram.com/vapersaltea" target="_blank" rel="noopener" class="social-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+        Instagram
+      </a>
+      <a href="https://tiktok.com/@vapersaltea" target="_blank" rel="noopener" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.11V9.01a6.28 6.28 0 00-.79-.05 6.28 6.28 0 106.28 6.28V9.4a8.16 8.16 0 004.82 1.58V7.53a4.83 4.83 0 01-1-.84z"/></svg>
+        TikTok
+      </a>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section id="productos">
+    <div class="section-header">
+      <h2>Nuestros productos</h2>
+      <p>Encuentra todo lo que necesitas para vapear. Filtra por categoria o busca directamente.</p>
+    </div>
+    <div class="product-controls">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Buscar productos...">
+      </div>
+    </div>
+    <div class="filter-tabs" id="filterTabs">
+      <button class="filter-tab active" data-cat="todos">Todos</button>
+      <button class="filter-tab" data-cat="liquidos">Liquidos</button>
+      <button class="filter-tab" data-cat="pods">Pods</button>
+      <button class="filter-tab" data-cat="kits">Kits</button>
+      <button class="filter-tab" data-cat="accesorios">Accesorios</button>
+      <button class="filter-tab" data-cat="sales">Sales</button>
+    </div>
+    <div style="height:16px"></div>
+    <div class="products-grid" id="productsGrid"></div>
+    <div class="no-results" id="noResults">
+      <p>No se encontraron productos. Prueba con otra busqueda.</p>
+    </div>
+  </section>
+
+  <!-- OPINIONES -->
+  <section id="opiniones">
+    <div class="section-header">
+      <h2>Lo que dicen nuestros clientes</h2>
+      <p>Valoraciones verificadas de Google Maps</p>
+    </div>
+    <div class="rating-summary">
+      <div class="rating-big">4,8</div>
+      <div class="rating-meta">
+        <div class="stars">★★★★★</div>
+        <div class="rating-count">Basado en 127 opiniones</div>
+        <div class="rating-source">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="width:14px;height:14px"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.76h3.56c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.99 7.28-2.66l-3.56-2.76c-.98.66-2.24 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.11a6.8 6.8 0 010-4.22V7.05H2.18A11.96 11.96 0 001 12c0 1.94.46 3.77 1.18 5.41l3.66-2.84v-.46z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.05l3.66 2.84c.87-2.6 3.3-4.51 6.16-4.51z" fill="#EA4335"/></svg>
+          Google
+        </div>
+      </div>
+    </div>
+    <div class="reviews-scroll" id="reviewsScroll"></div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-header">
+      <h2>Preguntas frecuentes</h2>
+      <p>Las dudas mas comunes de nuestros clientes</p>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="section-header">
+      <h2>Visitanos</h2>
+      <p>Encuantranos en el corazon de Altea</p>
+    </div>
+    <div class="contact-grid">
+      <div class="info-card">
+        <div id="openStatus"></div>
+        <h3>🕐 Horario</h3>
+        <div class="schedule-row"><span class="schedule-day">Lunes</span><span class="schedule-time">10:00 – 14:00 / 17:00 – 20:30</span></div>
+        <div class="schedule-row"><span class="schedule-day">Martes</span><span class="schedule-time">10:00 – 14:00 / 17:00 – 20:30</span></div>
+        <div class="schedule-row"><span class="schedule-day">Miercoles</span><span class="schedule-time">10:00 – 14:00 / 17:00 – 20:30</span></div>
+        <div class="schedule-row"><span class="schedule-day">Jueves</span><span class="schedule-time">10:00 – 14:00 / 17:00 – 20:30</span></div>
+        <div class="schedule-row"><span class="schedule-day">Viernes</span><span class="schedule-time">10:00 – 14:00 / 17:00 – 20:30</span></div>
+        <div class="schedule-row"><span class="schedule-day">Sabado</span><span class="schedule-time">10:00 – 14:00</span></div>
+        <div class="schedule-row"><span class="schedule-day">Domingo</span><span class="schedule-closed">Cerrado</span></div>
+      </div>
+      <div class="info-card">
+        <h3>📍 Direccion</h3>
+        <div class="address-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div>
+            <strong>Vapers Altea</strong><br>
+            Calle Mayor, 12<br>
+            03590 Altea, Alicante
+          </div>
+        </div>
+        <div class="address-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span style="user-select:all">+34 600 000 000</span>
+        </div>
+        <div style="margin-top:16px">
+          <div class="map-container">
+            <div class="map-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Altea, Alicante</span>
+              <a href="https://maps.google.com/?q=Vapers+Altea+Calle+Mayor+Altea+Alicante" target="_blank" rel="noopener" class="map-link">Abrir en Google Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter">
+    <div class="newsletter-card">
+      <h2>No te pierdas nada</h2>
+      <p>Suscribete para recibir ofertas exclusivas, novedades y descuentos directamente en tu correo.</p>
+      <form class="newsletter-form" onsubmit="return handleNewsletter(event)">
+        <input type="email" placeholder="tu@email.com" required id="nlEmail">
+        <button type="submit">Suscribirme</button>
+      </form>
+      <div class="newsletter-ok" id="nlOk">✓ Te has suscrito correctamente</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo" style="justify-content:center;font-size:18px;">VAPERS <span>ALTEA</span></div>
+    <div class="footer-links">
+      <a href="#productos">Productos</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="footer-legal">
+      Venta prohibida a menores de 18 anos. Los productos de vapeo contienen nicotina, una sustancia adictiva. Este sitio web no vende online, solo informacion.
+    </div>
+    <p>&copy; 2024 Vapers Altea. Todos los derechos reservados.</p>
+  </footer>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-inner">
+    <p>Usamos cookies para mejorar tu experiencia. Al continuar, aceptas nuestra politica de cookies.</p>
+    <div class="cookie-btns">
+      <button class="cookie-accept" onclick="acceptCookies()">Aceptar</button>
+      <button class="cookie-decline" onclick="acceptCookies()">Rechazar</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-img" id="modalImg"></div>
+    <div class="modal-cat" id="modalCat"></div>
+    <h3 id="modalName"></h3>
+    <p class="modal-desc" id="modalDesc"></p>
+    <div class="modal-price" id="modalPrice"></div>
+    <button class="modal-action" onclick="window.open('https://wa.me/34600000000','_blank')">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.016a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374A9.86 9.86 0 012.15 12.01C2.15 6.557 6.587 2.12 12.05 2.12a9.84 9.84 0 016.963 2.887 9.84 9.84 0 012.887 6.963c-.003 5.453-4.44 9.89-9.9 9.89l.05-.075zm8.413-18.297A11.82 11.82 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/></svg>
+      Pedir por WhatsApp
+    </button>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const products = [
+  { id:1, name:"Elfbar 600 V2", cat:"pods", desc:"Pod desechable con 600 caladas. Sabor intenso y bateria de larga duracion.", price:6.95, emoji:"💨", badge:"popular" },
+  { id:2, name:"Lost Mary BM600", cat:"pods", desc:"Diseño compacto y elegante con variedad de sabores frutales.", price:6.50, emoji:"🫧", badge:"new" },
+  { id:3, name:"Vaporesso XROS 4", cat:"kits", desc:"Kit completo con pod recargable. Ideal para principiantes y expertos.", price:24.95, emoji:"🔋", badge:null },
+  { id:4, name:"Nasty Juice Mango", cat:"liquidos", desc:"Liquido premium sabor mango tropical. 50ml, 70VG/30PG.", price:12.90, emoji:"🥭", badge:null },
+  { id:5, name:"Hangsen Menta Glacial", cat:"liquidos", desc:"Frescor intenso con toque helado. 10ml, varios niveles de nicotina.", price:3.50, emoji:"🧊", badge:null },
+  { id:6, name:"Vampire Vape Heisenberg", cat:"liquidos", desc:"El clasico Heisenberg: frutas, mentol y anis. 10ml.", price:4.20, emoji:"💎", badge:"popular" },
+  { id:7, name:"Voopoo Drag X2", cat:"kits", desc:"Mod potente con chip GENE.TT 2.0. Hasta 80W de potencia.", price:34.90, emoji:"⚡", badge:null },
+  { id:8, name:"Sales Maryliq by Elfbar", cat:"sales", desc:"Sales de nicotina 20mg. Sabores variados, 10ml.", price:5.50, emoji:"🧪", badge:"new" },
+  { id:9, name:"Resistencias GTX", cat:"accesorios", desc:"Pack de 5 resistencias compatibles con Vaporesso GTX.", price:9.95, emoji:"🔩", badge:null },
+  { id:10, name:"Cargador USB-C Rapido", cat:"accesorios", desc:"Cargador universal USB-C para todos tus dispositivos de vapeo.", price:7.50, emoji:"🔌", badge:null },
+  { id:11, name:"Elux Legend 3500", cat:"pods", desc:"Pod desechable de larga duracion. 3500 caladas, multiples sabores.", price:9.95, emoji:"✨", badge:"sale", oldPrice:12.95 },
+  { id:12, name:"Oil4Vap Tabaco Rubio", cat:"liquidos", desc:"Liquido artesanal espanol sabor tabaco rubio suave. 10ml.", price:4.50, emoji:"🍂", badge:null },
+  { id:13, name:"Pack Algodones Muji", cat:"accesorios", desc:"Algodon japones organico de alta calidad para RDA/RTA.", price:3.90, emoji:"☁️", badge:null },
+  { id:14, name:"Salt Nic Coconut", cat:"sales", desc:"Sales de nicotina sabor coco tropical. 10ml, 10mg/20mg.", price:5.90, emoji:"🥥", badge:null },
+  { id:15, name:"Geekvape Aegis Nano 2", cat:"kits", desc:"Kit ultra compacto y resistente al agua. Perfecto para llevar.", price:28.50, emoji:"🛡️", badge:"new" },
+];
+
+const reviews = [
+  { name:"Maria G.", text:"Excelente atencion. Me ayudaron a elegir mi primer vaper y me explicaron todo con mucha paciencia. Muy recomendable.", stars:5, date:"Hace 2 semanas" },
+  { name:"Carlos R.", text:"Gran variedad de liquidos y los precios son muy competitivos. Siempre encuentro lo que busco.", stars:5, date:"Hace 1 mes" },
+  { name:"Laura M.", text:"La mejor tienda de vapeo de la zona. El personal es muy amable y conoce bien los productos.", stars:5, date:"Hace 3 semanas" },
+  { name:"Pedro S.", text:"Llevo viniendo mas de un ano. Buen asesoramiento y siempre tienen novedades. Muy contento.", stars:5, date:"Hace 2 meses" },
+  { name:"Ana B.", text:"Me encanta esta tienda. Tienen de todo y si no lo tienen, te lo piden. Servicio 10.", stars:4, date:"Hace 1 mes" },
+  { name:"Javier T.", text:"Atencion rapida y profesional. Buenos precios en kits y pods desechables.", stars:5, date:"Hace 1 semana" },
+];
+
+const faqs = [
+  { q:"¿Que es mejor para empezar, un pod o un kit?", a:"Para principiantes recomendamos un pod recargable como el Vaporesso XROS 4. Es facil de usar, compacto y ofrece buena experiencia. Si buscas algo aun mas sencillo, los pods desechables son ideales para probar." },
+  { q:"¿Teneis servicio de asesoramiento?", a:"Por supuesto. Nuestro equipo te ayudara a elegir el dispositivo y liquido mas adecuado segun tus necesidades. No dudes en preguntar, estamos para ayudarte." },
+  { q:"¿Haceis envios a domicilio?", a:"Actualmente trabajamos solo en tienda fisica. Puedes hacer tu consulta por WhatsApp y tener tu pedido preparado para recoger." },
+  { q:"¿Que niveles de nicotina teneis?", a:"Trabajamos con liquidos de 0mg, 3mg, 6mg, 12mg y 18mg. En sales de nicotina disponemos de 10mg y 20mg. Te asesoramos para encontrar el nivel adecuado." },
+  { q:"¿Aceptais devoluciones?", a:"Aceptamos devoluciones de dispositivos sin abrir en un plazo de 14 dias con el ticket de compra. Los liquidos y consumibles no admiten devolucion por razones de higiene." },
+  { q:"¿Reparais dispositivos?", a:"Realizamos mantenimiento basico: cambio de resistencias, limpieza y ajustes. Para reparaciones mas complejas, consultanos y te orientaremos." },
+];
+
+// ===== AGE GATE =====
+function verifyAge(isAdult) {
+  if (isAdult) {
+    document.getElementById('ageGate').classList.add('hidden');
+    document.getElementById('mainSite').classList.add('visible');
+    try { localStorage.setItem('va_age','1'); } catch(e) {}
+    checkCookies();
+  } else {
+    document.getElementById('ageDenied').style.display = 'block';
+  }
+}
+(function() {
+  try {
+    if (localStorage.getItem('va_age') === '1') {
+      document.getElementById('ageGate').classList.add('hidden');
+      document.getElementById('mainSite').classList.add('visible');
+      checkCookies();
+    }
+  } catch(e) {}
+})();
+
+// ===== NAV =====
+function toggleNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+
+// ===== PRODUCTS =====
+let currentCat = 'todos';
+let searchTerm = '';
+
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  const noRes = document.getElementById('noResults');
+  let filtered = products.filter(p => {
+    const catMatch = currentCat === 'todos' || p.cat === currentCat;
+    const searchMatch = !searchTerm || p.name.toLowerCase().includes(searchTerm) || p.desc.toLowerCase().includes(searchTerm) || p.cat.toLowerCase().includes(searchTerm);
+    return catMatch && searchMatch;
+  });
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    noRes.classList.add('visible');
+    return;
+  }
+  noRes.classList.remove('visible');
+  let favs = [];
+  try { favs = JSON.parse(localStorage.getItem('va_favs')||'[]'); } catch(e) {}
+  grid.innerHTML = filtered.map(p => {
+    const isFav = favs.includes(p.id);
+    const badgeHtml = p.badge ? `<span class="product-badge badge-${p.badge}">${p.badge === 'new' ? 'Nuevo' : p.badge === 'sale' ? 'Oferta' : 'Popular'}</span>` : '';
+    const oldPriceHtml = p.oldPrice ? `<span class="old-price">${p.oldPrice.toFixed(2)}€</span>` : '';
+    return `<div class="product-card" onclick="openModal(${p.id})">
+      <div class="product-img">${badgeHtml}<button class="product-fav ${isFav?'liked':''}" onclick="event.stopPropagation();toggleFav(${p.id},this)"><svg viewBox="0 0 24 24" fill="${isFav?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>${p.emoji}</div>
+      <div class="product-info">
+        <div class="product-category">${catLabel(p.cat)}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <span class="product-price">${p.price.toFixed(2)}€${oldPriceHtml}</span>
+          <button class="product-add" onclick="event.stopPropagation();showToast('Consultanos por WhatsApp para reservar')">+</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function catLabel(c) {
+  const m = {liquidos:'Liquidos',pods:'Pods',kits:'Kits',accesorios:'Accesorios',sales:'Sales de nicotina'};
+  return m[c]||c;
+}
+
+// Filter tabs
+document.getElementById('filterTabs').addEventListener('click', e => {
+  const tab = e.target.closest('.filter-tab');
+  if (!tab) return;
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  currentCat = tab.dataset.cat;
+  renderProducts();
+});
+
+// Search
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  renderProducts();
+});
+
+// Favorites
+function toggleFav(id, btn) {
+  let favs = [];
+  try { favs = JSON.parse(localStorage.getItem('va_favs')||'[]'); } catch(e) {}
+  const idx = favs.indexOf(id);
+  if (idx > -1) { favs.splice(idx,1); showToast('Eliminado de favoritos'); }
+  else { favs.push(id); showToast('Anadido a favoritos ♥'); }
+  try { localStorage.setItem('va_favs', JSON.stringify(favs)); } catch(e) {}
+  renderProducts();
+}
+
+// Modal
+function openModal(id) {
+  const p = products.find(x=>x.id===id);
+  if (!p) return;
+  document.getElementById('modalImg').textContent = p.emoji;
+  document.getElementById('modalCat').textContent = catLabel(p.cat);
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalDesc').textContent = p.desc;
+  document.getElementById('modalPrice').innerHTML = p.price.toFixed(2) + '€' + (p.oldPrice ? ` <span style="font-size:16px;color:var(--fg-dim);text-decoration:line-through;font-weight:400">${p.oldPrice.toFixed(2)}€</span>` : '');
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+// ===== REVIEWS =====
+function renderReviews() {
+  document.getElementById('reviewsScroll').innerHTML = reviews.map(r =>
+    `<div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">${r.name[0]}</div>
+        <div><div class="review-name">${r.name}</div><div class="review-date">${r.date}</div></div>
+      </div>
+      <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
+      <div class="review-text">${r.text}</div>
+    </div>`
+  ).join('');
+}
+
+// ===== FAQ =====
+function renderFAQ() {
+  document.getElementById('faqList').innerHTML = faqs.map((f,i) =>
+    `<div class="faq-item" id="faq${i}">
+      <button class="faq-question" onclick="toggleFaq(${i})">${f.q}<span class="faq-icon">+</span></button>
+      <div class="faq-answer"><div class="faq-answer-inner">${f.a}</div></div>
+    </div>`
+  ).join('');
+}
+function toggleFaq(i) {
+  const item = document.getElementById('faq'+i);
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(el=>{ el.classList.remove('open'); el.querySelector('.faq-answer').style.maxHeight = null; });
+  if (!wasOpen) {
+    item.classList.add('open');
+    const ans = item.querySelector('.faq-answer');
+    ans.style.maxHeight = ans.scrollHeight + 'px';
+  }
+}
+
+// ===== OPEN STATUS =====
+function checkOpen() {
+  const now = new Date();
+  const day = now.getDay(); // 0=Sun
+  const h = now.getHours(), m = now.getMinutes();
+  const t = h * 60 + m;
+  let isOpen = false;
+  if (day >= 1 && day <= 5) {
+    isOpen = (t >= 600 && t < 840) || (t >= 1020 && t < 1230);
+  } else if (day === 6) {
+    isOpen = (t >= 600 && t < 840);
+  }
+  const el = document.getElementById('openStatus');
+  if (isOpen) {
+    el.innerHTML = '<div class="open-now"><span class="dot"></span>Abierto ahora</div>';
+  } else {
+    el.innerHTML = '<div class="open-now" style="background:rgba(232,74,74,0.12);color:var(--red)"><span class="dot" style="background:var(--red)"></span>Cerrado ahora</div>';
+  }
+}
+
+// ===== NEWSLETTER =====
+function handleNewsletter(e) {
+  e.preventDefault();
+  document.getElementById('nlOk').style.display = 'block';
+  document.getElementById('nlEmail').value = '';
+  showToast('Suscripcion confirmada');
+  return false;
+}
+
+// ===== COOKIES =====
+function checkCookies() {
+  try {
+    if (localStorage.getItem('va_cookies')) {
+      document.getElementById('cookieBanner').classList.add('hidden');
+    }
+  } catch(e) {}
+}
+function acceptCookies() {
+  document.getElementById('cookieBanner').classList.add('hidden');
+  try { localStorage.setItem('va_cookies','1'); } catch(e) {}
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 2500);
+}
+
+// ===== BACK TO TOP =====
+window.addEventListener('scroll', () => {
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  });
+});
+
+// ===== INIT =====
+renderProducts();
+renderReviews();
+renderFAQ();
+checkOpen();
+</script>
+
+</body></html>
